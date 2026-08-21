@@ -1,0 +1,54 @@
+# Secrets & local configuration — never commit real values
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+token*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.session
+*.session-journal
+
+# Databases / local data
+*.db
+*.sqlite
+*.sqlite3
+data/
+storage/
+media/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
