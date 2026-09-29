@@ -1,6 +1,7 @@
 # News resilience and membership boundaries — 2026-09-29
 
-Status: repair candidate prepared; production deployment and verification pending.
+Status: repair candidate uploaded to isolated Windows staging; live service unchanged.
+Production deployment and verification remain pending.
 
 ## What changed
 
@@ -36,3 +37,10 @@ do not establish the cause of the reported live incidents. The candidate require
 comparison with the active checkout, runtime configuration review and production
 health verification before it can be described as deployed or resolved. Source code,
 customer records, operational access details and credentials remain private.
+
+## Staging update — 2026-09-29
+
+The candidate has been uploaded to an isolated Windows staging environment.
+The live service remains unchanged. All 53 focused offline tests also passed on
+Windows. This upload does not establish that the reported live incidents have
+been resolved.

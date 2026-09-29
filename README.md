@@ -1,8 +1,9 @@
 # A2 — Trading-Signal Operations Platform (architecture showcase)
 
 Latest maintenance work: [news resilience and membership boundary checks,
-2026-09-29](docs/updates/2026-09-29-news-membership.md). The repair candidate is
-tested offline; production deployment and incident verification are pending.
+2026-09-29](docs/updates/2026-09-29-news-membership.md). The repair candidate has been
+uploaded to isolated Windows staging; live service remains unchanged. Production
+deployment and incident verification are pending.
 
 A production-grade platform for running a trading-signal operation end to end:
 authoring and publishing signals, tracking each one to its outcome, memberships
