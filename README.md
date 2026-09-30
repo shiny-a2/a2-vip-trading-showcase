@@ -1,9 +1,9 @@
 # A2 — Trading-Signal Operations Platform (architecture showcase)
 
-Latest maintenance work: [news resilience and membership boundary checks,
-2026-09-29](docs/updates/2026-09-29-news-membership.md). The repair candidate has been
-uploaded to isolated Windows staging; live service remains unchanged. Production
-deployment and incident verification are pending.
+Latest maintenance work: [0.1.1 — news resilience and membership notices](docs/updates/2026-09-29-news-membership.md).
+The release is deployed with healthy application services after 88 focused offline
+tests. News delivery still depends on resolving an external API credit restriction
+and verifying fresh publication.
 
 A production-grade platform for running a trading-signal operation end to end:
 authoring and publishing signals, tracking each one to its outcome, memberships
@@ -43,7 +43,7 @@ controllers. Dependencies point inward, toward the domain.
 | Worker | Market-data client, in-process price event bus, signal tracking, chart rendering, publishing pipeline, durable job consumer |
 | Scheduler | Durable timed jobs: membership expiry, renewal reminders, reconciliation, reports, feed-health watchdog |
 | Admin Web | Web admin panel (Next.js, work in progress) |
-| Mini App | Messaging-platform mini application (Next.js, work in progress) |
+| Mini App | Messaging-platform mini application served as static HTML and JavaScript by the API |
 
 All four backend services are native OS processes supervised by the operating
 system's own task scheduler — boot-triggered, auto-restarting, no containers.
@@ -107,7 +107,7 @@ revisited as the system grows.
 
 ## Tech stack
 
-- **Language / runtime:** Python 3.12, managed as a `uv` workspace (one
+- **Language / runtime:** Python 3.12 or later, managed as a `uv` workspace (one
   virtualenv, path dependencies across packages).
 - **Backend:** FastAPI (API), aiogram (bot), SQLAlchemy 2 async + PostgreSQL,
   Alembic migrations, Pydantic / pydantic-settings for config and schemas.
@@ -116,7 +116,8 @@ revisited as the system grows.
 - **Media:** matplotlib + Pillow for server-side chart rendering.
 - **Security:** argon2-cffi (Argon2id password hashing), cryptography
   (encryption at rest), PyJWT.
-- **Frontend:** Next.js for the Admin Web and Mini App (work in progress).
+- **Frontend:** Static HTML and JavaScript for the Mini App; Next.js for the
+  Admin Web (work in progress).
 - **Quality gates:** ruff (lint + format), mypy in strict mode, pytest +
   pytest-asyncio, a secret scanner, and a migration check — all in CI.
 

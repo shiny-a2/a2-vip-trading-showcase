@@ -1,7 +1,7 @@
-# News resilience and membership boundaries — 2026-09-29
+# 0.1.1 — News resilience and membership notices
 
-Status: repair candidate uploaded to isolated Windows staging; live service unchanged.
-Production deployment and verification remain pending.
+Status as of 2026-09-30: version 0.1.1 deployed; application service health verified.
+Restored news delivery remains dependent on external API credit.
 
 ## What changed
 
@@ -9,6 +9,12 @@ Production deployment and verification remain pending.
   Healthy sources continue to supply articles when another source fails.
 - Response validation tolerates malformed individual records and optional fields.
   Diagnostics omit credential-bearing URLs and raw provider exception text.
+- Provider outages and credit restrictions pause rewriting with backoff without
+  consuming each article's invalid-output retry budget.
+- Expiry and renewal notices identify the affected plan in English or Persian,
+  distinguish remaining valid subscriptions and independent operator permissions,
+  and claim channel removal only when confirmed. Valid overlapping access remains
+  effective.
 - A previously issued confirmation to increase position risk rechecks current
   execution permission. Expired membership or a trading halt preserves the existing
   protective stop instead of applying the requested widening.
@@ -22,25 +28,36 @@ Production deployment and verification remain pending.
 
 ## Why it matters
 
-A broken external source should not stop the whole news pipeline. Membership
-changes must be checked when an action is executed, including delayed confirmations,
-while customers retain the ability to reduce existing exposure. The regression
-checks use mocked providers and adapters without placing trades or sending messages.
+A broken external source should not stop the whole news pipeline or exhaust
+pending articles' retry budgets. Expiry of one plan does not necessarily end every
+permission. Notices now describe that distinction, while delayed actions still
+check current access and customers retain the ability to reduce existing exposure.
+
+Live diagnostics identified an external API credit restriction blocking news
+rewriting. They also confirmed that valid overlapping membership and independent
+operator permissions can explain continued access after one plan expires. The
+release preserves those valid permissions; it cannot restore external API credit.
 
 ## Verification boundary
 
-The candidate passed 53 focused offline tests, including four Mini App scenarios,
-plus syntax, lint and secret checks. Database integration and live checks remain pending.
+The release passed 88 focused offline tests, including four Mini App scenarios.
+Production-host Windows staging passed 87 tests; the JavaScript wrapper was skipped
+there because its runtime was unavailable, and was verified locally. Database
+integration tests were safely blocked by an unverified test schema. The checks use
+mocked providers and adapters without placing trades or sending test messages.
 
-The fixes address reproducible defects in the recovered deployment source. They
-do not establish the cause of the reported live incidents. The candidate requires
-comparison with the active checkout, runtime configuration review and production
-health verification before it can be described as deployed or resolved. Source code,
-customer records, operational access details and credentials remain private.
+The API, bot and scheduler were restarted and report the deployed release with
+healthy database checks. The exchange worker continued running throughout the
+update. A verified private backup and a tagged source release support rollback.
+News recovery additionally requires restored external API credit and verified
+fresh rewriting and publication.
+
+Source code, customer records, operational access details and credentials remain
+private.
 
 ## Staging update — 2026-09-29
 
-The candidate has been uploaded to an isolated Windows staging environment.
-The live service remains unchanged. All 53 focused offline tests also passed on
-Windows. This upload does not establish that the reported live incidents have
-been resolved.
+An earlier candidate was uploaded to isolated Windows staging and passed all 53
+focused offline tests there. The live service was unchanged by that upload. This
+earlier validation preceded the final provider-backoff and notification changes;
+it did not establish that the reported live incidents had been resolved.
